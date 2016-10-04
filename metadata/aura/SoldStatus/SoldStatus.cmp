@@ -1,0 +1,19 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+                access="global">
+
+	<!-- Visual progress bar indicating the current status of a property -->
+	
+    <aura:attribute name="steps" type="String[]" default="['Contracted', 'Pre Market', 'Available', 'Under Agreement', 'Closed']" />
+    <aura:attribute name="record" type="Object" />
+	    
+    <force:recordPreview aura:id="recordService" 
+                         recordId="{!v.recordId}" 
+                         targetRecord="{!v.record}" 
+                         fields="['Id', 'Status__c']"
+                         mode="EDIT"
+                         recordUpdated="{!c.refreshStep}"/>
+
+    <c:Process aura:id="processsteps" steps="{!v.steps}" currentStep="{!v.record.Status__c}" extraStep="Off Market"
+               stepChange="{!c.onStepChange}"/>
+    
+</aura:component>

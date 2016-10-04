@@ -1,0 +1,30 @@
+<aura:component implements="force:hasRecordId">
+
+    <!-- These will contain records or errors loaded by force:recordPreview -->
+    <aura:attribute type="Object" name="recordForCreate" description="When you call createRecord, the empty record object is added here"/>
+    <aura:attribute type="String" name="recordLoadError" description="If there are any errors loading a record for create, they'll be added here"/>
+    
+    <aura:attribute type="Boolean" name="recordLoaded" description="We'll set this to true after the record is loaded" />
+    <aura:attribute type="Boolean" name="showPageErrors" default="false" />
+
+    <aura:registerEvent name="closeModalEvt" type="c:closeModal" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>    
+
+    <!-- Load the data -->
+    <force:recordPreview aura:id="recordService"
+                         targetRecord="{!v.recordForCreate}"
+                         targetError="{!v.recordLoadError}"
+                         mode="EDIT"
+                         fields="Id,Appointment_Date__c,Client_Name__c"
+    />
+
+    <!-- Form UI -->
+    <aura:if isTrue="{!v.recordLoaded}">
+        <ui:inputDateTime aura:id="inputDate" label="Date and Time" displayDatePicker="true" value="{!v.recordForCreate.Appointment_Date__c}" />
+        <br/>
+        <ui:inputText aura:id="inputClient" label="Client" value="{!v.recordForCreate.Client_Name__c}" />
+        <br/>
+        <lightning:button aura:id="createButton" variant="brand" label="Create" onclick="{!c.createAppt}"/>
+    </aura:if>
+</aura:component>

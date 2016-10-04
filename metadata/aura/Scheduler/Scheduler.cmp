@@ -1,0 +1,53 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+                access="global">
+
+<!-- header of list -->	
+<article class="slds-card">
+  <div class="slds-card__header slds-grid">
+    <header class="slds-media slds-media--center slds-has-flexi-truncate">
+      <div class="slds-media__figure">
+        <lightning:icon iconName="standard:event" size="x-small"/>
+      </div>
+      <div class="slds-media__body slds-truncate">
+        <h2>
+          <a href="javascript:void(0);" class="slds-text-link--reset">
+            <span class="slds-text-heading--small">Appointments</span>
+          </a>
+        </h2>
+      </div>
+    </header>
+    <div class="slds-no-flex">
+      <button class="slds-button slds-button--neutral" onclick="{!c.showModal}">Create New Appointment</button>
+    </div>
+  </div>
+  <div class="slds-card__body">
+    <div class="slds-card__body--inner slds-grid slds-wrap slds-grid--pull-padded">
+
+    <!-- List of existing related records -->
+    <c:viewRelatedRecords aura:id="viewRelRec" recordId="{!v.recordId}" />
+
+<!-- Footer for list -->
+
+</div>
+  </div>
+  <div class="slds-card__footer"><a href="javascript:void(0);" onclick="{!c.navigateToAllAppointments}">View All <span class="slds-assistive-text">appointments</span></a></div>
+</article>
+
+    <!-- Modal for create new record -->
+    <div aura:id="modal" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse"
+                        onclick="{!c.hideModal}" >
+                    <c:svg class="slds-icon" xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#close" />                    
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">Create Appointment</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <c:createRelatedRecord recordId="{!v.recordId}" closeModalEvt="{!c.handleRecordSave}" />
+            </div>
+        </div>
+    </div>
+    <div class="slds-backdrop" aura:id="backdrop"></div>
+</aura:component>

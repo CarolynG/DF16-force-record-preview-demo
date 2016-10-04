@@ -1,0 +1,55 @@
+<aura:component implements="force:hasRecordId">
+    
+    <aura:attribute type="Object" name="record"/>
+    <aura:attribute type="String" name="recordLoadError"/>
+
+    <force:recordPreview recordId="{!v.recordId}"
+                  targetRecord="{!v.record}"
+                  targetError="{!v.recordLoadError}"
+                  mode="VIEW"
+                  fields="Id,Name,Appointment_Date__c,Client_Name__c" />
+    
+    <aura:if isTrue="{!v.record}">
+      <!-- Source: https://www.lightningdesignsystem.com/components/cards/ -->
+      <div class="slds-tile slds-media slds-card__tile slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-1 slds-hint-parent">
+        <div class="slds-media__figure">
+          <div class="slds-icon_container">
+            <lightning:icon iconName="standard:event" size="x-small"/>
+            <span class="slds-assistive-text">Appointment</span>
+          </div>
+        </div>
+        <div class="slds-media__body">
+          <div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
+            <h3 class="slds-truncate" title="Related Record Title 1" onclick="{!c.navigateToAppt}"><a>{!v.record.Name}</a></h3>
+            <!-- Dropdown arrow -->
+            <!-- <div class="slds-shrink-none">
+              <button class="slds-button slds-button-~-icon-border-filled slds-button-~-icon-x-small" aria-haspopup="true">
+                <lightning:icon iconName="utility:down" size="x-small"/>
+                <span class="slds-assistive-text">More options</span>
+              </button>
+            </div> -->
+          </div>
+          <div class="slds-tile__detail slds-text-body--small">
+            <dl class="slds-dl--horizontal">
+              <dt class="slds-dl--horizontal__label">
+                <span class="slds-truncate" title="Client">Client:</span>
+              </dt>
+              <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                <span class="slds-truncate" title="{!v.record.Client_Name__c}">{!v.record.Client_Name__c}</span>
+              </dd>
+              <dt class="slds-dl--horizontal__label">
+                <span class="slds-truncate" title="Date">Date:</span>
+              </dt>
+              <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                <span class="slds-truncate" title="{!v.record.Appointment_Date__c}">
+                    <ui:outputDateTime value="{!v.record.Appointment_Date__c}"/>
+                </span>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+<p></p>
+  </aura:if>
+
+</aura:component>

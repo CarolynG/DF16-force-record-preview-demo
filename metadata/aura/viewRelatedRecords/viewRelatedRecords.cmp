@@ -1,0 +1,16 @@
+<aura:component implements="force:hasRecordId" controller="QueryRelatedRecordsController">
+	
+    <aura:attribute type="String[]" name="recordIds" description="Controller will load record ids and add them here."/>
+    <aura:attribute type="Boolean" name="recordIdsLoaded" default="false" description="Set to true after record ids successfully loaded from server" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <aura:method name="reloadRelatedRecords" action="{!c.reloadRelatedRecords}" />
+
+    <aura:if isTrue="{!v.recordIdsLoaded}">
+        <aura:iteration items="{!v.recordIds}" var="recId">
+            <c:appointmentCard recordId="{!recId}"/>
+        </aura:iteration>
+    </aura:if>
+
+</aura:component>
